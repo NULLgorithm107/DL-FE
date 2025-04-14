@@ -1,0 +1,48 @@
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #a0d9de;
+    --text-primary: #000000;
+    --text-secondary: #252121;
+
+    --button-primary: none;
+    --button-primary-shadow: rgba(0, 0, 0);
+    --button-primary-hover-shadow: rgba(0, 0, 0);
+    --button-primary-click: rgba(0, 0, 0, 0.151);
+    --button-primary-click-shadow: rgb(0, 0, 0);
+    --button-primary-border: rgba(0, 0, 0);
+
+    --button-nav-primary: rgb(255, 255, 255);
+    --button-nav-primary-shadow: rgba(226, 214, 216, 0.661);
+    --button-nav-primary-hover-shadow: rgba(232, 218, 220, 0.825);
+    --button-nav-primary-click: rgba(255, 255, 255, 0.151);
+    --button-nav-primary-click-shadow: rgb(237, 227, 229);
+    --button-secondary: #71b8e4;
+    --nav-primary: rgb(73, 57, 113);
+    --nav-selected: #ffffff;
+    --nav-secondary: #1b1a33;
+    --nav-text-primary: #ffffff;
+    --nav-text-selected: #000000;
+
+    --modal-primary: #ffffff;
+    --modal-shadow: rgba(0, 0, 0, 0.151);
+    --modal-text: #000000;
+
+    --dialog-bg: rgba(0, 0, 0, 0.5);
+
+    --loader-color: #000000;
+    --loader-bg: #968c8c28;
+
+    --dropdown-name-bg:  rgb(73, 57, 113);
+    --dropdown-name: white;
+    --dropdown-menu-bg: rgba(226, 214, 216, 0.661);
+    --dropdown-menu-hover: rgba(255, 255, 255, 0.901);
+
+    --textbox-border:#8884d8;
+}
+
+body{
+    margin:0;
+    padding:0;
+    height:'100vh';
+    width:'100vw';
+}
