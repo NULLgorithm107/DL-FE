@@ -3,13 +3,15 @@ import { use, useEffect, useState } from 'react'
 import './App.css'
 import Toggle from './atoms/Toggle'
 import MainPage from './MainPage';
+import NonLLMPage from './NonLLMPage';
+import ShortestPath from './modules/SHortestPath';
 
 function App() {
   const [isLLM, setIsLLM] = useState(false);
   const [currentPage, setCurrentPage] = useState('Home');
 
   const navbar_options = [
-    'Home',
+    'Shortest Path',
     'About',
     'Contact',
     'Services',
@@ -81,7 +83,11 @@ function App() {
         </div>
 
         <div style={{ width: '80%',paddingRight:'50px' }}>
-            <MainPage selectedPage={currentPage}/>
+            {/* {isLLM ? <MainPage selectedPage={currentPage}/> : <NonLLMPage selectedPage={currentPage}/>} */}
+            {
+              currentPage === 'Shortest Path' ? <ShortestPath/> :
+              <></>
+            }
         </div>
       </div>
     </>

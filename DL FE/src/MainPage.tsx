@@ -26,11 +26,11 @@ function MainPage({selectedPage:any}) {
         </div>
         <div style={{ display:'flex',gap:'10px',width:'100%',alignItems:'center',justifyContent:'center',height:'100px'}}>
             {/* <div style={{padding:'10px',display:'flex',alignItems:'center',justifyContent:'center'}}> */}
-                <input type="text" placeholder="Search..." style={{height:'40px',width:'400px', padding: '10px', borderRadius: '5px', border: '1px solid black' }} />
+                <input type="text" placeholder="Search..." style={{height:'40px',width:'400px', padding: '10px', borderRadius: '5px', border: '1px solid black', fontSize:'16px'}} />
             {/* </div> */}
             {/* <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}> */}
                 <button style={{
-                    height:'60px',padding: '10px', borderRadius: '5px', border: 'none', backgroundColor: 'rgb(68, 95, 177)', color: 'white', cursor: 'pointer'
+                    height:'60px',padding: '10px', borderRadius: '5px', border: 'none', backgroundColor: 'rgb(68, 95, 177)', color: 'white', cursor: 'pointer',width:'100px',fontSize:'16px',fontWeight:'bold'
                 }}>Send</button>
             {/* </div> */}
         </div>
