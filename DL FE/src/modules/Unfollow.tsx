@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { callAPI } from '../service/ApiHelper';
 
-function ShortestPath() {
+function Unfollow() {
 
     const [nodes, setNodes] = useState<any[]>([]);
-    const [startNode, setStartNode] = useState<string>('');
-    const [endNode, setEndNode] = useState<string>('');
+    const [follower, setFollower] = useState<string>('');
+    const [followee, setFollowee] = useState<string>('');
     const [Output, setOutput] = useState<any[]>([]);
 
     const getNodes = async () => {  
@@ -26,17 +26,19 @@ function ShortestPath() {
     }
 
     const handleSubmit = async () => {
-        if(!startNode || !endNode){
+        if(!follower || !followee){
             alert('Please select both start and end nodes');
             return;
         }
-        const response = await callAPI('/graph/shortest-path','POST',{
-            from: startNode,
-            to: endNode
+        const response = await callAPI('/accounts/unfollow','POST',{
+            follower: follower,
+            followee: followee
         });
         console.log('response',response)
-        if(response.found){
-            setOutput(response.path);
+        if(response.success){
+            setOutput(response.deleted);
+        }else{
+            setOutput(response.error);
         }
     }
  
@@ -62,7 +64,7 @@ function ShortestPath() {
             gap:'10px',
             width:'100%',
         }}>
-            <div style={{width:'50%',border:'1px solid black',borderRadius:'5px',padding:'10px', backgroundColor: "#778bc7"}}>
+            <div style={{width:'50%',border:'1px solid black',borderRadius:'5px',padding:'10px', backgroundColor: "#778bc7", overflow: 'auto'}}>
                 <h2>Input</h2>
                 <div style={{
                     display:'flex',
@@ -72,8 +74,8 @@ function ShortestPath() {
                     alignItems:'center',
                     justifyContent:'center',}}>
                     <div>
-                        <label htmlFor="start">Select Start Node: </label>
-                        <select id="dropdown" value={startNode} onChange={(event)=>setStartNode(event.target.value)}
+                        <label htmlFor="start">Follower: </label>
+                        <select id="dropdown" value={follower} onChange={(event)=>setFollower(event.target.value)}
                         style={{width:'100%',height:'40px',borderRadius:'5px',border:'1px solid black',padding:'10px'}}>
                             <option value="" disabled>Select one</option>
                             {nodes.map((option, index) => (
@@ -83,8 +85,8 @@ function ShortestPath() {
                     </div>
 
                     <div>
-                        <label htmlFor="end">Select End Node: </label>
-                        <select id="dropdown" value={endNode} onChange={(event)=>setEndNode(event.target.value)}
+                        <label htmlFor="end">Followee: </label>
+                        <select id="dropdown" value={followee} onChange={(event)=>setFollowee(event.target.value)}
                         style={{width:'100%',height:'40px',borderRadius:'5px',border:'1px solid black',padding:'10px'}}>
                             <option value="" disabled>Select one</option>
                             {nodes.map((option, index) => (
@@ -123,4 +125,4 @@ function ShortestPath() {
   )
 }
 
-export default ShortestPath
+export default Unfollow

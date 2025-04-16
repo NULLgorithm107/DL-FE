@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { callAPI } from '../service/ApiHelper';
 
-function ShortestPath() {
+function CommonConnections() {
 
     const [nodes, setNodes] = useState<any[]>([]);
     const [startNode, setStartNode] = useState<string>('');
@@ -30,13 +30,16 @@ function ShortestPath() {
             alert('Please select both start and end nodes');
             return;
         }
-        const response = await callAPI('/graph/shortest-path','POST',{
-            from: startNode,
-            to: endNode
+        const response = await callAPI('/analytics/common-connections','POST',{
+            account1: startNode,
+            account2: endNode
         });
         console.log('response',response)
-        if(response.found){
-            setOutput(response.path);
+        if(response.success){
+            setOutput(response.common_connections);
+        }else{
+            console.log('Error fetching common connections')
+            setOutput(response.error);
         }
     }
  
@@ -62,7 +65,7 @@ function ShortestPath() {
             gap:'10px',
             width:'100%',
         }}>
-            <div style={{width:'50%',border:'1px solid black',borderRadius:'5px',padding:'10px', backgroundColor: "#778bc7"}}>
+            <div style={{width:'50%',border:'1px solid black',borderRadius:'5px',padding:'10px', backgroundColor: "#778bc7", overflow: 'auto'}}>
                 <h2>Input</h2>
                 <div style={{
                     display:'flex',
@@ -72,7 +75,7 @@ function ShortestPath() {
                     alignItems:'center',
                     justifyContent:'center',}}>
                     <div>
-                        <label htmlFor="start">Select Start Node: </label>
+                        <label htmlFor="start">Username 1: </label>
                         <select id="dropdown" value={startNode} onChange={(event)=>setStartNode(event.target.value)}
                         style={{width:'100%',height:'40px',borderRadius:'5px',border:'1px solid black',padding:'10px'}}>
                             <option value="" disabled>Select one</option>
@@ -83,7 +86,7 @@ function ShortestPath() {
                     </div>
 
                     <div>
-                        <label htmlFor="end">Select End Node: </label>
+                        <label htmlFor="end">Username 2: </label>
                         <select id="dropdown" value={endNode} onChange={(event)=>setEndNode(event.target.value)}
                         style={{width:'100%',height:'40px',borderRadius:'5px',border:'1px solid black',padding:'10px'}}>
                             <option value="" disabled>Select one</option>
@@ -123,4 +126,4 @@ function ShortestPath() {
   )
 }
 
-export default ShortestPath
+export default CommonConnections

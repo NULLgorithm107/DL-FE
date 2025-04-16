@@ -1,48 +1,47 @@
 import { useEffect, useState } from 'react'
 import { callAPI } from '../service/ApiHelper';
 
-function ShortestPath() {
+function PageRank() {
 
     const [nodes, setNodes] = useState<any[]>([]);
-    const [startNode, setStartNode] = useState<string>('');
-    const [endNode, setEndNode] = useState<string>('');
-    const [Output, setOutput] = useState<any[]>([]);
+    // const [startNode, setStartNode] = useState<string>('');
+    // const [endNode, setEndNode] = useState<string>('');
+    // const [Output, setOutput] = useState<any[]>([]);
 
     const getNodes = async () => {  
-        const response = await callAPI('/graph/nodes','GET');
-        console.log('response',response.nodes)
-        if(response){
-            const nodes = response.nodes.map((node:any) => {
-                if(node.node_type[0] === 'Account'){
-                    return node.n.name;
-                }
-            });
-            console.log('nodes',nodes)
-            setNodes(nodes);
+        const response = await callAPI('/analytics/pagerank','GET');
+        console.log('response',response)
+        if(response.count){
+            // const nodes = response.nodes.map((node:any) => {
+            //     if(node.node_type[0] === 'Account'){
+            //         return node.n.name;
+            //     }
+            // });
+            // console.log('nodes',)
+            setNodes(response.pagerank_scores);
         }
         else{
             console.log('Error fetching nodes')
+            setNodes(response.error);
         }
     }
 
-    const handleSubmit = async () => {
-        if(!startNode || !endNode){
-            alert('Please select both start and end nodes');
-            return;
-        }
-        const response = await callAPI('/graph/shortest-path','POST',{
-            from: startNode,
-            to: endNode
-        });
-        console.log('response',response)
-        if(response.found){
-            setOutput(response.path);
-        }
-    }
+    // const handleSubmit = async () => {
+    //     // if(!startNode || !endNode){
+    //     //     alert('Please select both start and end nodes');
+    //     //     return;
+    //     // }
+    //     const response = await callAPI('/graph/nodes','POST');
+    //     console.log('response',response)
+    //     if(response.found){
+    //         setOutput(response.path);
+    //     }
+    // }
  
     useEffect(() => {
         getNodes();
     },[])
+    
   return (
     <>
      <div style={{
@@ -57,12 +56,12 @@ function ShortestPath() {
         color:'white',
      }}>
         <div style={{
-            height:'80%',
+            height:'90%',
             display:'flex',
             gap:'10px',
             width:'100%',
         }}>
-            <div style={{width:'50%',border:'1px solid black',borderRadius:'5px',padding:'10px', backgroundColor: "#778bc7"}}>
+            {/* <div style={{width:'50%',border:'1px solid black',borderRadius:'5px',padding:'10px'}}>
                 <h2>Input</h2>
                 <div style={{
                     display:'flex',
@@ -93,34 +92,25 @@ function ShortestPath() {
                         </select>
                     </div>
                 </div>
-            </div>
-            <div style={{width:'50%',border:'1px solid black',borderRadius:'5px',padding:'10px', backgroundColor: "#778bc7", overflow: 'auto'}}>
+            </div> */}
+            <div style={{width:'100%',border:'1px solid black',borderRadius:'5px',padding:'10px', overflow: 'auto', backgroundColor: "#778bc7"}}>
                 <h2>Output</h2>
-                <div>
+                {/* <div>
                     <pre style={{display:'flex',textWrap:'wrap'}}>
                     {JSON.stringify(Output,null,2)}
                     </pre>
+                </div> */}
+                <div>
+                    <pre style={{display:'flex',textWrap:'wrap'}}>
+                    {JSON.stringify(nodes,null,2)}
+                    </pre>
                 </div>
+
             </div>
-        </div>
-        <div>
-            <button style={{
-                height:'60px',
-                padding: '10px',
-                borderRadius: '5px',
-                border: 'none',
-                backgroundColor: 'black',
-                color: 'white',
-                cursor: 'pointer',
-                width:'100px',
-                fontSize:'16px',
-            }}
-            onClick={handleSubmit}
-            >Submit</button>
         </div>
      </div>
     </>
   )
 }
 
-export default ShortestPath
+export default PageRank
